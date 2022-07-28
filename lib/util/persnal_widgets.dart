@@ -4,12 +4,14 @@ Widget Button(
   BuildContext context, {
   String str = "",
   String? routeName,
+  GestureTapCallback? onTap,
 }) {
   return InkWell(
     onTap: () {
       if (routeName != null) {
         Navigator.pushNamed(context, routeName);
       }
+      onTap!.call();
     },
     child: Container(
       padding: EdgeInsets.all(2),
@@ -41,9 +43,7 @@ Widget textInput({
       width: wgt,
       child: TextField(
         controller: textEditingController,
-        style: TextStyle(
-          fontSize: 14
-        ),
+        style: TextStyle(fontSize: 14),
         decoration: InputDecoration(
           labelText: lbltxt,
           border: OutlineInputBorder(),
