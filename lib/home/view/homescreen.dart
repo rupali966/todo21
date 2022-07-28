@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Button(
               context,
               str: "Sign-Up",
-              routeName: 'signin',
+              routeName: 'signup',
             ),
           ),
           SizedBox(height: 20),
@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Button(
               context,
               str: "Sign-In",
-              routeName: 'signup',
+              routeName: 'signin',
             ),
           ),
         ],
