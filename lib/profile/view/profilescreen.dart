@@ -30,7 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: Consumer<signupProvider>(
         builder: ((context, value, child) {
-          if (value.getData().id1 != null) {
+          if (value.getData().id1 == 1) {
             return Container(
               padding: EdgeInsets.all(16),
               child: Column(
@@ -46,12 +46,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       text(
                         clr: Colors.blueAccent,
                         str: "Name :",
+                          edit: true
                       ),
-                      S(height: 7),
                       text(
                         size: 13,
-                        str: "Jaydeep Wagh",
-                      )
+                        str: "${value.getData().name1}",
+
+                      ),
+                      Divider(),
                     ]),
                   ),
                   S(),
@@ -61,12 +63,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       text(
                         clr: Colors.blueAccent,
                         str: "Email :",
+                        edit: true,
                       ),
-                      S(height: 7),
                       text(
-                        str: "JaydeepWagh919@gmail.com",
+                        str: "${value.getData().email1}",
                         size: 13,
-                      )
+                      ),   Divider(),
                     ]),
                   ),
                   S(),
@@ -76,12 +78,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       text(
                         clr: Colors.blueAccent,
                         str: "Contact :",
+                        edit: true
                       ),
-                      S(height: 7),
                       text(
                         str: "+919664920749",
                         size: 13,
-                      )
+                      ), Divider(),
                     ]),
                   ),
                   S(),
@@ -90,7 +92,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             );
           } else {
-            return Container();
+            // /* Navigator.pushNamed(context, 'signup');*/
+            return Container(
+              padding: EdgeInsets.all(16),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 150,
+                    height: 200,
+                    child: Expanded(
+                      child: text(
+                        size: 20,
+                        str: "No Data Is Avalible Go To SignIn or SignUp",
+                      ),
+                    ),
+                  ),
+                  S(),
+                  Button(context, str: "Sign-Up", routeName: 'signup'),
+                  S(height: 10),
+                  Button(context, str: "Sign-In", routeName: 'signin')
+                ],
+              ),
+            );
           }
         }),
       ),

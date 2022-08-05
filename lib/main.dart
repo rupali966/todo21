@@ -14,7 +14,6 @@ void main() async {
       providers: [
         ListenableProvider<dataOperation>(create: (_) => dataOperation()),
         ListenableProvider<signupProvider>(create: (_) => signupProvider()),
-
       ],
       child: MaterialApp(
         title: 'Reading and Writing Files',

@@ -45,6 +45,10 @@ Widget textInput({
         controller: textEditingController,
         style: TextStyle(fontSize: 14),
         decoration: InputDecoration(
+          // suffixIcon: IconButton(
+          //   icon: Icon(Icons.edit),
+          //   onPressed: (){},
+          // ),
           labelText: lbltxt,
           border: OutlineInputBorder(),
         ),
@@ -71,13 +75,29 @@ Widget text({
   String? str,
   double? size = 12,
   Color clr = Colors.black,
+  bool edit = false,
 }) {
   if (str == null) {
     return Text("null");
   } else {
-    return Text(
-      str,
-      style: TextStyle(fontSize: size, color: clr),
+    return Row(
+      children: [
+        Text(
+          str,
+          style: TextStyle(fontSize: size, color: clr),
+        ),
+        Expanded(
+          child: S(),
+        ),
+        if (edit)
+          IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.edit,
+                color: Colors.blueAccent,
+                size: 24,
+              ))
+      ],
     );
   }
 }
