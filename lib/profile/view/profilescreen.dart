@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:persistence/util/persnal_widgets.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -21,7 +20,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: AppBar(
         centerTitle: true,
         leading: IconButton(
-          onPressed: (){},
+          onPressed: () {},
           icon: Icon(Icons.person),
         ),
         title: Text('Profile '),
