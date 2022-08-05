@@ -39,6 +39,8 @@ dependencies:
   path_provider: ^2.0.11
   json_annotation: ^3.0.1
   json_serializable: ^3.4.0
+  sqflite_common_ffi: ^2.1.1+1
+  provider: ^6.0.3
 
 dev_dependencies:
   flutter_test:

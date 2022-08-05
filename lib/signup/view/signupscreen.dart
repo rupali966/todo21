@@ -10,7 +10,8 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  usrsignUp usr = usrsignUp(id1: 0, name1: "", pass1: '0000');
+  TextEditingController username = TextEditingController();
+  TextEditingController password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             S(),
             Center(
               child: textInput(
-                textEditingController: usr.name,
+                textEditingController: username,
                 hgt: 50,
                 wgt: 300,
                 lbltxt: 'Name',
@@ -41,7 +42,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             S(),
             Center(
               child: textInput(
-                textEditingController: usr.pass,
+                textEditingController: password,
                 lbltxt: "Password",
                 hgt: 50,
                 wgt: 300,
@@ -50,24 +51,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
             S(),
             Center(
                 child: Button(context, str: "Save", onTap: () async {
-              String username = usr.name.text;
-              String password = usr.pass.text;
               usrsignUp usr1 = usrsignUp(
-                id1: 0,
-                name1: username,
-                pass1: password,
+                id1: 1,
+                name1: username.text,
+                pass1: password.text,
               );
-              final database2 = usr1.dt();
+              dataOperation op = dataOperation();
+              final database2 = op.data_initialization();
               database2;
-              usr1.insertDog(usr1, database2);
+              op.insert_data(usr1, database2);
               print("${usr1.toString()}");
-              List data = await usr1.dogs(database2);
-              print('${data}');
 
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
-                    "Saving .. ${usr.name.text}",
+                    "Saving .. ${username.text}",
                   ),
                 ),
               );
