@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:persistence/signup/modal/signup_data.dart';
+import 'package:persistence/util/persnal_widgets.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -25,11 +28,71 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         title: Text('Profile '),
       ),
-      body: Column(
-        children: [
-          Text("Profle"),
-          Container(),
-        ],
+      body: Consumer<signupProvider>(
+        builder: ((context, value, child) {
+          if (value.getData().id1 != null) {
+            return Container(
+              padding: EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.redAccent,
+                    radius: 120,
+                  ),
+                  S(),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: ListOfText(herizonatal: false, listOfWidget: [
+                      text(
+                        clr: Colors.blueAccent,
+                        str: "Name :",
+                      ),
+                      S(height: 7),
+                      text(
+                        size: 13,
+                        str: "Jaydeep Wagh",
+                      )
+                    ]),
+                  ),
+                  S(),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: ListOfText(herizonatal: false, listOfWidget: [
+                      text(
+                        clr: Colors.blueAccent,
+                        str: "Email :",
+                      ),
+                      S(height: 7),
+                      text(
+                        str: "JaydeepWagh919@gmail.com",
+                        size: 13,
+                      )
+                    ]),
+                  ),
+                  S(),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: ListOfText(herizonatal: false, listOfWidget: [
+                      text(
+                        clr: Colors.blueAccent,
+                        str: "Contact :",
+                      ),
+                      S(height: 7),
+                      text(
+                        str: "+919664920749",
+                        size: 13,
+                      )
+                    ]),
+                  ),
+                  S(),
+                  Container(),
+                ],
+              ),
+            );
+          } else {
+            return Container();
+          }
+        }),
       ),
     );
   }

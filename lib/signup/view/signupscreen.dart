@@ -56,11 +56,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 name1: username.text,
                 pass1: password.text,
               );
+              signupProvider().setData(setdt: usr1);
+
               dataOperation op = dataOperation();
               final database2 = op.data_initialization();
               database2;
               op.insert_data(usr1, database2);
-              print("${usr1.toString()}");
 
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(

@@ -67,11 +67,37 @@ Widget textInput({
   }
 }
 
-Widget text({String? str}) {
+Widget text({
+  String? str,
+  double? size = 12,
+  Color clr = Colors.black,
+}) {
   if (str == null) {
     return Text("null");
   } else {
-    return Text(str);
+    return Text(
+      str,
+      style: TextStyle(fontSize: size, color: clr),
+    );
+  }
+}
+
+Widget ListOfText({
+  bool herizonatal = true,
+  List<Widget> listOfWidget = const <Widget>[],
+}) {
+  if (herizonatal) {
+    return Row(
+      // mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: listOfWidget,
+    );
+  } else {
+    return Column(
+      // mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: listOfWidget,
+    );
   }
 }
 

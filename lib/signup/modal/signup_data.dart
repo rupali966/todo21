@@ -6,6 +6,18 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
+class signupProvider extends ChangeNotifier{
+  usrsignUp Data = usrsignUp(name1: "", pass1: "", id1: 0);
+  void setData({required usrsignUp setdt}){
+    Data = setdt;
+    notifyListeners();
+  }
+  usrsignUp getData(){
+    return Data;
+  }
+
+}
+
 class usrsignUp extends ChangeNotifier {
   final String name1;
   final String pass1;
@@ -54,5 +66,21 @@ class dataOperation extends ChangeNotifier {
       data.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+  }
+
+  // A method that retrieves all the dogs from the dogs table.
+  Future<List<usrsignUp>> getDataFromDatabase(database) async {
+
+    final db = await database;
+
+    final List<Map<String, dynamic>> maps = await db.query('dogs');
+
+    return List.generate(maps.length, (i) {
+      return usrsignUp(
+        id1: maps[i]['id'],
+        name1: maps[i]['name'],
+        pass1: maps[i]['pass'],
+      );
+    });
   }
 }

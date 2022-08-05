@@ -12,7 +12,9 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        Provider<dataOperation>(create: (_) => dataOperation()),
+        ListenableProvider<dataOperation>(create: (_) => dataOperation()),
+        ListenableProvider<signupProvider>(create: (_) => signupProvider()),
+
       ],
       child: MaterialApp(
         title: 'Reading and Writing Files',
