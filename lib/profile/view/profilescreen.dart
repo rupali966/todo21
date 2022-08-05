@@ -24,7 +24,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           onPressed: (){},
           icon: Icon(Icons.person),
         ),
-        title: Text('Profile'),
+        title: Text('Profile '),
       ),
       body: Column(
         children: [

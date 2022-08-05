@@ -11,12 +11,11 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: GestureDetector(
-          onTap: () {},
-          child: Padding(
-            padding: EdgeInsets.all(8.0),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          leading: GestureDetector(
+            onTap: () {},
             child: Column(
               children: [
                 IconButton(
@@ -29,29 +28,29 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
+          title: Text("Timer"),
         ),
-        title: Text("Timer"),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Center(
-            child: Button(
-              context,
-              str: "Sign-Up",
-              routeName: 'signup',
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Center(
+              child: Button(
+                context,
+                str: "Sign-Up",
+                routeName: 'signup',
+              ),
             ),
-          ),
-          SizedBox(height: 20),
-          Center(
-            child: Button(
-              context,
-              str: "Sign-In",
-              routeName: 'signin',
+            SizedBox(height: 20),
+            Center(
+              child: Button(
+                context,
+                str: "Sign-In",
+                routeName: 'signin',
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
