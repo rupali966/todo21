@@ -30,7 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: Consumer<signupProvider>(
         builder: ((context, value, child) {
-          if (value.getData().id1 != 1) {
+          if (value.getData().id1 == 1) {
             return Container(
               padding: EdgeInsets.all(16),
               child: Column(
@@ -46,46 +46,43 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       text(
                         clr: Colors.blueAccent,
                         str: "Name :",
+                        edit: true,
                       ),
-                      S(height: 7),
                       text(
                         size: 13,
                         str: "${value.getData().name1}",
-                      )
+                      ),
+                      Divider(),
                     ]),
                   ),
-                  S(),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: ListOfText(herizonatal: false, listOfWidget: [
                       text(
                         clr: Colors.blueAccent,
                         str: "Email :",
+                        edit: true,
                       ),
-                      S(height: 7),
                       text(
                         str: "JaydeepWagh919@gmail.com",
-                        size: 13,
-                      )
+                      ),
+                      Divider(),
                     ]),
                   ),
-                  S(),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: ListOfText(herizonatal: false, listOfWidget: [
                       text(
                         clr: Colors.blueAccent,
                         str: "Contact :",
+                        edit: true,
                       ),
-                      S(height: 7),
                       text(
                         str: "+919664920749",
-                        size: 13,
-                      )
+                      ),
+                      Divider(),
                     ]),
                   ),
-                  S(),
-                  Container(),
                 ],
               ),
             );
