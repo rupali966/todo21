@@ -21,23 +21,23 @@ class signupProvider extends ChangeNotifier {
 
 class usrsignUp extends ChangeNotifier {
   final String name1;
-  final String pass1;
   final String email1;
+  final String pass1;
   final int id1;
 
   usrsignUp({
-    required this.email1,
     required this.name1,
     required this.pass1,
+    required this.email1,
     required this.id1,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'id': id1,
-      'email': email1,
       'name': name1,
       'pass': pass1,
+      'email': email1,
     };
   }
 
@@ -48,6 +48,7 @@ class usrsignUp extends ChangeNotifier {
 }
 
 class dataOperation extends ChangeNotifier {
+
   Future<Database> data_initialization() async {
     Directory? tempDir = await getExternalStorageDirectory();
     String tempPath = tempDir!.path;
@@ -55,7 +56,7 @@ class dataOperation extends ChangeNotifier {
       join(await tempPath, 'usr_database.db'),
       onCreate: (db, version) {
         return db.execute(
-          'CREATE TABLE dogs(id INTEGER PRIMARY KEY, name TEXT,email TEXT, pass INTEGER)',
+          'CREATE TABLE dogs(id INTEGER PRIMARY KEY, name TEXT, pass TEXT,email TEXT)',
         );
       },
       version: 1,
@@ -73,6 +74,7 @@ class dataOperation extends ChangeNotifier {
 
   // A method that retrieves all the dogs from the dogs table.
   Future<List<usrsignUp>> getDataFromDatabase(database) async {
+
     final db = await database;
 
     final List<Map<String, dynamic>> maps = await db.query('dogs');
@@ -86,8 +88,4 @@ class dataOperation extends ChangeNotifier {
       );
     });
   }
-
-// make a method that get a perticular module data using the name and password
-// (serching and retrival is used),
-// make a method to chage globle user profile data
 }

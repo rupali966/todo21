@@ -78,6 +78,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               );
 
               signup.setData(setdt: usr1);
+
               // iitilizig the data
               dataOperation op = dataOperation();
               final database2 = op.data_initialization();
