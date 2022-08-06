@@ -14,6 +14,20 @@ class signupProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void change_name({
+    required String name,
+  }) {
+    Data.name1 = name;
+    notifyListeners();
+  }
+  void change_email({
+    required String email,
+  }) {
+    Data.name1 = email;
+    notifyListeners();
+  }
+
+
   usrsignUp getData() {
     return Data;
   }

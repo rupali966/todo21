@@ -32,8 +32,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: Consumer<signupProvider>(
         builder: ((context, value, child) {
-          // true condition is == 1 not 0
-
           return Container(
             padding: EdgeInsets.all(16),
             child: Column(
@@ -57,12 +55,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             warnig_to_display: "Do you really want to edit ?",
                           )) {
                             print("value = ${value.Data.name1}");
-                            Provider.of<signupProvider>(context, listen: false)
-                                .Data
-                                .name1 = user_name_to_chanege;
-                            print("${value.Data.name1}");
-
-                            print("${user_name_to_chanege}");
+                            value.change_name(name: user_name_to_chanege);
                           }
                         }),
                     text(size: 13, str: "${value.Data.name1}"),
@@ -76,6 +69,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       clr: Colors.blueAccent,
                       str: "Email :",
                       edit: true,
+                      onPresd: () async {
+                        if (await confirm_alertbox(
+                          getdata: true,
+                          context,
+                          warnig_to_display: "Do you really want to edit ?",
+                        )) {
+                          print("value = ${value.Data.email1}");
+                          value.change_email(email: user_email_to_chanege);
+                        }
+                      }
                     ),
                     text(
                       str: (value.Data.email1 == "")
