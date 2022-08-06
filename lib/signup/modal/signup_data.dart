@@ -20,10 +20,10 @@ class signupProvider extends ChangeNotifier {
 }
 
 class usrsignUp extends ChangeNotifier {
-  final String name1;
-  final String email1;
-  final String pass1;
-  final int id1;
+  String name1;
+  String email1;
+  String pass1;
+  int id1;
 
   usrsignUp({
     required this.name1,
@@ -48,7 +48,6 @@ class usrsignUp extends ChangeNotifier {
 }
 
 class dataOperation extends ChangeNotifier {
-
   Future<Database> data_initialization() async {
     Directory? tempDir = await getExternalStorageDirectory();
     String tempPath = tempDir!.path;
@@ -74,7 +73,6 @@ class dataOperation extends ChangeNotifier {
 
   // A method that retrieves all the dogs from the dogs table.
   Future<List<usrsignUp>> getDataFromDatabase(database) async {
-
     final db = await database;
 
     final List<Map<String, dynamic>> maps = await db.query('dogs');

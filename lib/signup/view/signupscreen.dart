@@ -43,7 +43,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             S(),
             Center(
               child: textInput(
-                textEditingController: username,
+                editcntrl: username,
                 hgt: 50,
                 wgt: 300,
                 lbltxt: 'Name',
@@ -52,7 +52,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             S(),
             Center(
               child: textInput(
-                textEditingController: email,
+                editcntrl: email,
                 hgt: 50,
                 wgt: 300,
                 lbltxt: 'Email',
@@ -61,7 +61,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             S(),
             Center(
               child: textInput(
-                textEditingController: password,
+                editcntrl: password,
                 lbltxt: "Password",
                 hgt: 50,
                 wgt: 300,

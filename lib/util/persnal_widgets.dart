@@ -35,14 +35,14 @@ Widget textInput({
   double? hgt,
   double? wgt,
   String? lbltxt,
-  TextEditingController? textEditingController,
+  TextEditingController? editcntrl,
 }) {
   if (hgt != null) {
     return Container(
       height: hgt,
       width: wgt,
       child: TextField(
-        controller: textEditingController,
+        controller: editcntrl,
         style: TextStyle(fontSize: 14),
         decoration: InputDecoration(
           // suffixIcon: IconButton(
@@ -60,10 +60,13 @@ Widget textInput({
       width: 300,
       child: Expanded(
         child: TextField(
-          controller: textEditingController,
+          controller: editcntrl,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
-            labelText: 'Input Hare ...',
+            labelText: 'Input here ',
+            labelStyle: TextStyle(
+              fontSize: 13
+            )
           ),
         ),
       ),
@@ -76,6 +79,7 @@ Widget text({
   double? size = 12,
   Color clr = Colors.black,
   bool edit = false,
+  final VoidCallback? onPresd,
 }) {
   if (str == null) {
     return Text("null");
@@ -91,7 +95,11 @@ Widget text({
         ),
         if (edit)
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                if (onPresd != null) {
+                  onPresd.call();
+                }
+              },
               icon: Icon(
                 Icons.edit,
                 color: Colors.blueAccent,
@@ -131,6 +139,24 @@ Widget S({double height = 20, double width = 20}) {
     return SizedBox(
       height: height,
       width: width,
+    );
+  }
+}
+Widget txtbtn({
+  String? str,
+  double? size = 14,
+  Color clr = Colors.black,
+}) {
+  if (str == null) {
+    return Text("null");
+  } else {
+    return Container(
+      padding: EdgeInsets.all(5),
+      margin: EdgeInsets.all(5),
+      child: Text(
+        str,
+        style: TextStyle(fontSize: size, color: clr),
+      ),
     );
   }
 }
