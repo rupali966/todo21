@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:persistence/signup/modal/signup_data.dart';
 import 'package:persistence/util/constant.dart';
 import 'package:persistence/util/persnal_widgets.dart';
-import 'package:provider/provider.dart';
 
 confirm_alertbox(
   context, {
@@ -66,8 +64,6 @@ confirm_alertbox(
                     TextButton(
                       child: txtbtn(str: 'Yes', clr: Colors.green),
                       onPressed: () {
-
-
                         Navigator.pop(context);
                       },
                     ),

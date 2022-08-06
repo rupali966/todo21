@@ -62,12 +62,9 @@ Widget textInput({
         child: TextField(
           controller: editcntrl,
           decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: 'Input here ',
-            labelStyle: TextStyle(
-              fontSize: 13
-            )
-          ),
+              border: OutlineInputBorder(),
+              labelText: 'Input here ',
+              labelStyle: TextStyle(fontSize: 13)),
         ),
       ),
     );
@@ -142,6 +139,7 @@ Widget S({double height = 20, double width = 20}) {
     );
   }
 }
+
 Widget txtbtn({
   String? str,
   double? size = 14,

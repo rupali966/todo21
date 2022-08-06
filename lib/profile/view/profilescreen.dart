@@ -57,17 +57,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             warnig_to_display: "Do you really want to edit ?",
                           )) {
                             print("value = ${value.Data.name1}");
-                            Provider.of<signupProvider>(context,listen: false).Data.name1 = user_name_to_chanege;
+                            Provider.of<signupProvider>(context, listen: false)
+                                .Data
+                                .name1 = user_name_to_chanege;
                             print("${value.Data.name1}");
 
                             print("${user_name_to_chanege}");
                           }
                         }),
-                    text(
-                      size: 13,
-                      str: "${value.Data.name1}"
-                    ),
-
+                    text(size: 13, str: "${value.Data.name1}"),
                     Divider(),
                   ]),
                 ),
