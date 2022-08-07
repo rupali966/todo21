@@ -6,9 +6,16 @@ import 'package:persistence/signup/view/signupscreen.dart';
 import 'package:provider/provider.dart';
 
 import 'signup/modal/signup_data.dart';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(
     MultiProvider(
       providers: [

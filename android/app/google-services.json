@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "190336451303",
+    "project_id": "persistence-ee6a9",
+    "storage_bucket": "persistence-ee6a9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190336451303:android:58bdb695f3b3cf0c959842",
+        "android_client_info": {
+          "package_name": "com.example.persistence"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190336451303-9s3b9t3kelfn3i8u1e9m74no1iqrgrfr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSn79NeYOBr39ZZveUKUz95DK1CmhsQFE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190336451303-9s3b9t3kelfn3i8u1e9m74no1iqrgrfr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
