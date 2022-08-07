@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:persistence/util/constant.dart';
 import 'package:persistence/util/persnal_widgets.dart';
 
-confirm_alertbox(
-  context, {
+confirm_alertbox({
+  required BuildContext context,
   String warnig_to_display = "",
   bool getdata = false,
+  VoidCallback? onYes_Pressed,
+  VoidCallback? onNo_Pressed,
+  required Widget editWidget,
 }) async {
   dialogmodal dgldt;
-  TextEditingController userchange = TextEditingController();
   return showDialog<void>(
     context: context,
-    barrierDismissible: false, // user must tap button!
+    barrierDismissible: false,
     builder: (BuildContext context) {
       return AlertDialog(
         title: (getdata) ? Text('Edit') : Text("Alert-box"),
@@ -25,9 +26,7 @@ confirm_alertbox(
                     S(),
                     Center(
                       child: Expanded(
-                        child: textInput(
-                          editcntrl: userchange,
-                        ),
+                        child: editWidget,
                       ),
                     ),
                   ],
@@ -45,16 +44,11 @@ confirm_alertbox(
                   children: [
                     TextButton(
                       child: txtbtn(str: 'Yes', clr: Colors.green),
-                      onPressed: () {
-                        user_name_to_chanege = userchange.text;
-                        Navigator.of(context).pop(true);
-                      },
+                      onPressed: onYes_Pressed,
                     ),
                     TextButton(
                       child: txtbtn(str: 'No', clr: Colors.redAccent),
-                      onPressed: () {
-                        Navigator.of(context).pop(false);
-                      },
+                      onPressed: onNo_Pressed,
                     ),
                   ],
                 )
@@ -80,16 +74,4 @@ class dialogmodal {
   String userinfo;
 
   dialogmodal({required this.yesorno, required this.userinfo});
-}
-
-confirmation_box(context, {String warning = ""}) {
-  return text(
-      clr: Colors.blueAccent,
-      edit: true,
-      onPresd: () {
-        confirm_alertbox(
-          context,
-          warnig_to_display: warning,
-        );
-      });
 }

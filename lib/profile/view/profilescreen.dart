@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:persistence/signup/modal/signup_data.dart';
-import 'package:persistence/util/constant.dart';
 import 'package:persistence/util/dialog.dart';
 import 'package:persistence/util/persnal_widgets.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +12,16 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  TextEditingController userchange_name = TextEditingController();
+  TextEditingController userchange_email = TextEditingController();
+
+
+  @override
+  void initState() {
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,59 +55,52 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: ListOfText(herizonatal: false, listOfWidget: [
                     text(
                         clr: Colors.blueAccent,
+                        str: "Email :",
+                        edit: true,
+                        onPresd: () async {
+                          await confirm_alertbox(
+                              getdata: true,
+                              context: context,
+                              warnig_to_display: "Do you really want to edit ?",
+                              editWidget: textInput(
+                                editcntrl: userchange_email,
+                              ),
+                              onYes_Pressed: () {
+                                value.change_email(
+                                  email: userchange_email.text,
+                                );
+                                Navigator.of(context).pop();
+                              },
+                              onNo_Pressed: () {
+                                Navigator.of(context).pop();
+                              });
+                        }),
+                    text(size: 13, str: "${value.Data.email1}"),
+                    Divider(),
+                  ]),
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: ListOfText(herizonatal: false, listOfWidget: [
+                    text(
+                        clr: Colors.blueAccent,
                         str: "Name :",
                         edit: true,
                         onPresd: () async {
-                          if (await confirm_alertbox(
-                            getdata: true,
-                            context,
-                            warnig_to_display: "Do you really want to edit ?",
-                          )) {
-                            print("value = ${value.Data.name1}");
-                            value.change_name(name: user_name_to_chanege);
-                          }
+                          await confirm_alertbox(
+                              getdata: true,
+                              context: context,
+                              warnig_to_display: "Do you really want to edit ?",
+                              editWidget: textInput(editcntrl: userchange_name),
+                              onYes_Pressed: () {
+                                value.change_name(name: userchange_name.text);
+                                Navigator.of(context).pop();
+                              },
+                              onNo_Pressed: () {
+                                Navigator.of(context).pop();
+                              });
                         }),
                     text(size: 13, str: "${value.Data.name1}"),
-                    Divider(),
-                  ]),
-                ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: ListOfText(herizonatal: false, listOfWidget: [
-                    text(
-                      clr: Colors.blueAccent,
-                      str: "Email :",
-                      edit: true,
-                      onPresd: () async {
-                        if (await confirm_alertbox(
-                          getdata: true,
-                          context,
-                          warnig_to_display: "Do you really want to edit ?",
-                        )) {
-                          print("value = ${value.Data.email1}");
-                          value.change_email(email: user_email_to_chanege);
-                        }
-                      }
-                    ),
-                    text(
-                      str: (value.Data.email1 == "")
-                          ? ""
-                          : "${value.getData().email1}",
-                    ),
-                    Divider(),
-                  ]),
-                ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: ListOfText(herizonatal: false, listOfWidget: [
-                    text(
-                      clr: Colors.blueAccent,
-                      str: "Contact :",
-                      edit: true,
-                    ),
-                    text(
-                      str: "+919664920749",
-                    ),
                     Divider(),
                   ]),
                 ),
