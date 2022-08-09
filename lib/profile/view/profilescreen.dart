@@ -1,10 +1,9 @@
-import 'package:firebase_database/firebase_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:persistence/signup/modal/signup_data.dart';
 import 'package:persistence/util/dialog.dart';
 import 'package:persistence/util/persnal_widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -41,12 +40,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: Consumer<signupProvider>(
         builder: ((context, value, child) {
-
-
-
-
-
-
           return Container(
             padding: EdgeInsets.all(16),
             child: Column(
@@ -76,22 +69,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 value.change_email(
                                   email: userchange_email.text,
                                 );
-                                CollectionReference users = FirebaseFirestore.instance.collection('users');
-                               final usr =  await users.doc("rh4TlbKVOWtzmXtVjlqS").snapshots();
-                                FirebaseFirestore.instance
-                                    .collection('users')
-                                    .get()
-                                    .then((QuerySnapshot querySnapshot) {
-                                  querySnapshot.docs.forEach((doc) {
-                                    print(doc["name"]);
-                                  });
-                                });
-// Get the data onc
-
-// Print the data of the snapshot
+                                CollectionReference users = FirebaseFirestore
+                                    .instance
+                                    .collection('users');
+                                final usr = await users
+                                    .doc("rh4TlbKVOWtzmXtVjlqS")
+                                    .snapshots();
                                 print(usr);
                                 Navigator.of(context).pop();
-
                               },
                               onNo_Pressed: () {
                                 Navigator.of(context).pop();
