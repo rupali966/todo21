@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:persistence/signup/modal/signup_data.dart';
 import 'package:persistence/util/persnal_widgets.dart';
@@ -70,7 +71,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             S(),
             Center(
                 child: Button(context, str: "Save", onTap: () async {
-                  usrsignUp usr1 = usrsignUp(
+              final usr1 = user_signup_modal(
                 id1: 1,
                 name1: username.text,
                 pass1: password.text,
@@ -78,6 +79,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
               );
 
               signup.setData(setdt: usr1);
+              dynamic db = FirebaseFirestore.instance;
+              final docRef = db
+                  .collection("userSignUp")
+                  .withConverter(
+                    fromFirestore: usr1.fromFirestore,
+                    toFirestore: (user_signup_modal city, options) =>
+                        city.toFirestore(),
+                  )
+                  .doc("userSignUptest");
+              await docRef.set(usr1);
 
               // iitilizig the data
               dataOperation op = dataOperation();
