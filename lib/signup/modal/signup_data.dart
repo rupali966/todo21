@@ -8,7 +8,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 class signupProvider extends ChangeNotifier {
-  user_signup_modal Data = user_signup_modal(name1: "", pass1: "", id1: 0, email1: "");
+  user_signup_modal Data =
+      user_signup_modal(name1: "", pass1: "", id1: 0, email1: "");
 
   void setData({required user_signup_modal setdt}) {
     Data = setdt;
@@ -41,13 +42,11 @@ class user_signup_modal {
   int? id1;
 
   user_signup_modal({
-     this.name1,
-     this.pass1,
+    this.name1,
+    this.pass1,
     this.email1,
-     this.id1,
+    this.id1,
   });
-
-
 
   // get fromFirestore => this.fromFirestore;
 
@@ -75,9 +74,9 @@ class user_signup_modal {
   }
 
   factory user_signup_modal.fromFirestore(
-      DocumentSnapshot<Map<String, dynamic>> snapshot,
-      SnapshotOptions? options,
-      ) {
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
     final data = snapshot.data();
     return user_signup_modal(
       name1: data?['name'],
@@ -85,6 +84,50 @@ class user_signup_modal {
       id1: data?['id'],
       pass1: data?['pass'],
     );
+  }
+}
+class City {
+  final String? name;
+  final String? state;
+  final String? country;
+  final bool? capital;
+  final int? population;
+  final List<String>? regions;
+
+  City({
+    this.name,
+    this.state,
+    this.country,
+    this.capital,
+    this.population,
+    this.regions,
+  });
+
+  factory City.fromFirestore(
+      DocumentSnapshot<Map<String, dynamic>> snapshot,
+      SnapshotOptions? options,
+      ) {
+    final data = snapshot.data();
+    return City(
+      name: data?['name'],
+      state: data?['state'],
+      country: data?['country'],
+      capital: data?['capital'],
+      population: data?['population'],
+      regions:
+      data?['regions'] is Iterable ? List.from(data?['regions']) : null,
+    );
+  }
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      if (name != null) "name": name,
+      if (state != null) "state": state,
+      if (country != null) "country": country,
+      if (capital != null) "capital": capital,
+      if (population != null) "population": population,
+      if (regions != null) "regions": regions,
+    };
   }
 }
 

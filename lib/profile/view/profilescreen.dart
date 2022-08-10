@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:persistence/signup/modal/signup_data.dart';
+import 'package:persistence/util/defaut_widgets.dart';
 import 'package:persistence/util/dialog.dart';
 import 'package:persistence/util/persnal_widgets.dart';
 import 'package:provider/provider.dart';
@@ -43,10 +44,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             stream: FirebaseFirestore.instance.collection('users').snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
-                return Text('Something went wrong');
+                return hasErrorWidget();
               }
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Text("Loading");
+                return loddingWidget();
               }
               return Container(
                 padding: EdgeInsets.all(16),
@@ -78,25 +79,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     value.change_email(
                                       email: userchange_email.text,
                                     );
-
-                                    // final user = <String, dynamic>{
-                                    //   "first": "Ada",
-                                    //   "last": "Lovelace",
-                                    //   "born": 1815
-                                    // };
-                                    // dynamic db = FirebaseFirestore.instance;
-                                    // db.collection("users").add(user).then((DocumentReference doc) =>
-                                    //     print('DocumentSnapshot added with ID: ${doc.id}'));
-                                    // await db.collection("users").get().then((event) {
-                                    //   for (var doc in event.docs) {
-                                    //     print("${doc.id} => ${doc.data()}");
-                                    //   }
-                                    // });
-                                    // db.collection("users").doc("1bnwOYfUUB5dLRnzI0F9").set({"first": "xxxxxx"});
-                                    // db.collection("users").doc("1bnwOYfUUB5dLRnzI0F9").delete().then(
-                                    //       (doc) => print("Document deleted"),
-                                    //   onError: (e) => print("Error updating document $e"),
-                                    // );
 
                                     Navigator.of(context).pop();
                                   },

@@ -107,6 +107,23 @@ Widget text({
   }
 }
 
+Widget text2({
+  String? str,
+  double? size = 16,
+  Color clr = Colors.black,
+  bool edit = false,
+  final VoidCallback? onPresd,
+}) {
+  if (str == null) {
+    return Text("null");
+  } else {
+    return Text(
+      str,
+      style: TextStyle(fontSize: size, color: clr),
+    );
+  }
+}
+
 Widget ListOfText({
   bool herizonatal = true,
   List<Widget> listOfWidget = const <Widget>[],
