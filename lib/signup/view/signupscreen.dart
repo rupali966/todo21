@@ -86,7 +86,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   S(),
                   Center(
                       child: Button(context, str: "Save", onTap: () async {
-                    final usr1 = user_signup_modal(
+                        final usr1 = user_signup_modal(
                       id1: 1,
                       name1: username.text,
                       pass1: password.text,

@@ -12,7 +12,7 @@ writing_data({required user_signup_modal data}) async {
   await docRef.set(data);
 }
 
- get_data({
+get_data({
   required String collectionname,
   required String docName,
 }) async {
