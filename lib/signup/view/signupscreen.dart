@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:persistence/signup/controller/firefun.dart';
 import 'package:persistence/signup/modal/signup_data.dart';
 import 'package:persistence/util/defaut_widgets.dart';
 import 'package:persistence/util/persnal_widgets.dart';
@@ -14,6 +15,7 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   dynamic db = FirebaseFirestore.instance;
+  dynamic collectionRef = FirebaseFirestore.instance.collection("userSignUp");
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController email = TextEditingController();
@@ -33,7 +35,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
         stream: FirebaseFirestore.instance.collection("userSignUp").snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return hasErrorWidget(ErrorMsg: "Error while retrieving data from server");
+            return hasErrorWidget(
+                ErrorMsg: "Error while retrieving data from server");
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
             return loddingWidget();
@@ -89,18 +92,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       pass1: password.text,
                       email1: email.text,
                     );
-
                     signup.setData(setdt: usr1);
+                    writing_data(data: usr1);
+                    // Future<Map<String, dynamic>> data = get_data(
+                    //   collectionname: "userSignUp",
+                    //   docName: "userSignUptest",
+                    // );
+                    // // data.then((value) => null)
+                    // // final refrenceof = collectionRef.doc("userSignUptest");
+                    // // refrenceof.get().then(
+                    // //   (DocumentSnapshot doc) {
+                    // //     final data = doc.data() as Map<String, dynamic>;
+                    //     print("${data['name']}");
+                    // //   },
+                    // // );
 
-                    final docRef = db
-                        .collection("userSignUp")
-                        .withConverter(
-                          fromFirestore: user_signup_modal.fromFirestore,
-                          toFirestore: (user_signup_modal, options) =>
-                              usr1.toFirestore(),
-                        )
-                        .doc("userSignUptest");
-                    await docRef.set(usr1);
                     dataOperation op = dataOperation();
                     final database2 = op.data_initialization();
                     database2;

@@ -86,6 +86,7 @@ class user_signup_modal {
     );
   }
 }
+
 class City {
   final String? name;
   final String? state;
@@ -104,9 +105,9 @@ class City {
   });
 
   factory City.fromFirestore(
-      DocumentSnapshot<Map<String, dynamic>> snapshot,
-      SnapshotOptions? options,
-      ) {
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
     final data = snapshot.data();
     return City(
       name: data?['name'],
@@ -115,7 +116,7 @@ class City {
       capital: data?['capital'],
       population: data?['population'],
       regions:
-      data?['regions'] is Iterable ? List.from(data?['regions']) : null,
+          data?['regions'] is Iterable ? List.from(data?['regions']) : null,
     );
   }
 
