@@ -81,7 +81,7 @@ class fireOper {
       );
     } else {
       force_write_for_usersignup(data: data);
-      snackbarrr(context, msg: 'Saving ...',bgclr: Colors.green);
+      snackbarrr(context, msg: 'Saving ...', bgclr: Colors.green);
     }
   }
 
