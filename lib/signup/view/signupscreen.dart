@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:persistence/signup/controller/firefun.dart';
 import 'package:persistence/signup/modal/signup_data.dart';
+import 'package:persistence/signup/provider/firefun.dart';
 import 'package:persistence/util/defaut_widgets.dart';
 import 'package:persistence/util/persnal_widgets.dart';
 import 'package:provider/provider.dart';
@@ -86,40 +86,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   S(),
                   Center(
                       child: Button(context, str: "Save", onTap: () async {
-                        final usr1 = user_signup_modal(
+                    final usr1 = user_signup_modal(
                       id1: 1,
                       name1: username.text,
                       pass1: password.text,
                       email1: email.text,
                     );
                     signup.setData(setdt: usr1);
-                    writing_data(data: usr1);
-                    // Future<Map<String, dynamic>> data = get_data(
-                    //   collectionname: "userSignUp",
-                    //   docName: "userSignUptest",
-                    // );
-                    // // data.then((value) => null)
-                    // // final refrenceof = collectionRef.doc("userSignUptest");
-                    // // refrenceof.get().then(
-                    // //   (DocumentSnapshot doc) {
-                    // //     final data = doc.data() as Map<String, dynamic>;
-                    //     print("${data['name']}");
-                    // //   },
-                    // // );
-
-                    dataOperation op = dataOperation();
-                    final database2 = op.data_initialization();
-                    database2;
-                    op.insert_data(usr1, database2);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        backgroundColor: Colors.redAccent,
-                        content: Text(
-                          " ${username.text} Saving ...      ",
-                        ),
-                      ),
+                    fireOper fireop = fireOper(
+                      docName: 'userSignUptest',
+                      collectionname: 'userSignUp',
                     );
-                    print("Save");
+                    fireop.safe_write_usersignup(context, data: usr1);
                   })),
                 ],
               ),

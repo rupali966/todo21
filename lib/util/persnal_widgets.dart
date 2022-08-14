@@ -31,6 +31,15 @@ Widget Button(
   );
 }
 
+void Navigate(
+  BuildContext context, {
+  String? routeName,
+}) {
+  if (routeName != null) {
+    Navigator.pushNamed(context, routeName);
+  }
+}
+
 Widget textInput({
   double? hgt,
   double? wgt,
@@ -174,4 +183,21 @@ Widget txtbtn({
       ),
     );
   }
+}
+
+ScaffoldFeatureController snackbarrr(
+  context, {
+  final Color? bgclr = Colors.redAccent,
+  String? msg,
+  final SnackBarAction? action,
+}) {
+  return ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      backgroundColor: bgclr,
+      content: Text(
+        msg.toString(),
+      ),
+      action: action,
+    ),
+  );
 }
