@@ -9,7 +9,6 @@ confirm_alertbox({
   VoidCallback? onNo_Pressed,
   required Widget editWidget,
 }) async {
-  dialogmodal dgldt;
   return showDialog<void>(
     context: context,
     barrierDismissible: false,

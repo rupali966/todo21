@@ -7,6 +7,7 @@ import 'package:persistence/signup/view/signupscreen.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
+import 'signin/provider/signinprovider.dart';
 import 'signup/modal/signup_data.dart';
 import 'work/view/workscreen.dart';
 
@@ -27,10 +28,12 @@ void main() async {
       providers: [
         ListenableProvider<dataOperation>(create: (_) => dataOperation()),
         ListenableProvider<signupProvider>(create: (_) => signupProvider()),
+        ListenableProvider<sign_in_provider>(create: (_) => sign_in_provider()),
       ],
       child: MaterialApp(
         title: 'Reading and Writing Files',
         debugShowCheckedModeBanner: false,
+        // initialRoute: 'signin',
         routes: {
           '/': (context) => HomeScreen(),
           'profile': (context) => ProfileScreen(),

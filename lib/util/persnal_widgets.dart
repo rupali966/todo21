@@ -7,12 +7,7 @@ Widget Button(
   GestureTapCallback? onTap,
 }) {
   return InkWell(
-    onTap: () {
-      if (routeName != null) {
-        Navigator.pushNamed(context, routeName);
-      }
-      onTap!.call();
-    },
+    onTap: onTap,
     child: Container(
       padding: EdgeInsets.all(2),
       margin: EdgeInsets.all(2),

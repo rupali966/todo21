@@ -36,17 +36,21 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Center(
               child: Button(
+                onTap: () {
+                  Navigate(context, routeName: 'signup');
+                },
                 context,
                 str: "Sign-Up",
-                routeName: 'signup',
               ),
             ),
             SizedBox(height: 20),
             Center(
               child: Button(
+                onTap: () {
+                  Navigate(context, routeName: 'signin');
+                },
                 context,
                 str: "Sign-In",
-                routeName: 'signin',
               ),
             ),
           ],
