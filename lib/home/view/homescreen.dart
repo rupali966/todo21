@@ -14,19 +14,16 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          leading: GestureDetector(
-            onTap: () {},
-            child: Column(
-              children: [
-                IconButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, 'profile');
-                  },
-                  icon: Icon(Icons.person),
-                  tooltip: 'Profile',
-                ),
-              ],
-            ),
+          leading: Column(
+            children: [
+              IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, 'profile');
+                },
+                icon: Icon(Icons.person),
+                tooltip: 'Profile',
+              ),
+            ],
           ),
           title: Text("Timer"),
         ),

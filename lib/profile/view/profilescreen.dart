@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:persistence/signin/provider/signinprovider.dart';
 import 'package:persistence/signup/modal/signup_data.dart';
 import 'package:persistence/util/constant.dart';
 import 'package:persistence/util/defaut_widgets.dart';
@@ -43,6 +44,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         title: Text('Profile '),
       ),
       body: Consumer<signupProvider>(builder: (context, value, child) {
+        sign_in_provider pr = Provider.of<sign_in_provider>(
+          context,
+          listen: false,
+        );
         return StreamBuilder<QuerySnapshot>(
             stream: userSignUpDoc,
             builder:
@@ -51,6 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 return hasErrorWidget();
               }
               if (snapshot.connectionState == ConnectionState.waiting) {
+                pr.is_signIn();
                 return loddingWidget();
               }
               if (snapshot.connectionState == ConnectionState.active) {
@@ -67,82 +73,89 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     return e['name'];
                   }
                 });
+                print(data);
 
-                return Container(
-                  padding: EdgeInsets.all(16),
-                  child: Column(
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: Colors.redAccent,
-                        radius: 120,
-                      ),
-                      S(),
-                      text(str: ""),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: ListOfText(herizonatal: false, listOfWidget: [
-                          text(
-                              clr: Colors.blueAccent,
-                              str: "Email : ",
-                              edit: true,
-                              onPresd: () async {
-                                await confirm_alertbox(
-                                    getdata: true,
-                                    context: context,
-                                    warnig_to_display:
-                                        "Do you really want to edit ?",
-                                    editWidget: textInput(
-                                      editcntrl: userchange_email,
-                                    ),
-                                    onYes_Pressed: () async {
-                                      value.change_email(
-                                        email: userchange_email.text,
-                                      );
+                if (pr.dtt) {
+                  return Container(
+                    padding: EdgeInsets.all(16),
+                    child: Column(
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: Colors.redAccent,
+                          radius: 120,
+                        ),
+                        S(),
+                        text(str: ""),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: ListOfText(herizonatal: false, listOfWidget: [
+                            text(
+                                clr: Colors.blueAccent,
+                                str: "Email : ",
+                                edit: true,
+                                onPresd: () async {
+                                  await confirm_alertbox(
+                                      getdata: true,
+                                      context: context,
+                                      warnig_to_display:
+                                          "Do you really want to edit ?",
+                                      editWidget: textInput(
+                                        editcntrl: userchange_email,
+                                      ),
+                                      onYes_Pressed: () async {
+                                        value.change_email(
+                                          email: userchange_email.text,
+                                        );
 
-                                      Navigator.of(context).pop();
-                                    },
-                                    onNo_Pressed: () {
-                                      Navigator.of(context).pop();
-                                    });
-                              }),
-                          text(size: 13, str: "${email}"),
-                          Divider(),
-                        ]),
-                      ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: ListOfText(herizonatal: false, listOfWidget: [
-                          text(
-                              clr: Colors.blueAccent,
-                              str: "Name : ",
-                              edit: true,
-                              onPresd: () async {
-                                await confirm_alertbox(
-                                    getdata: true,
-                                    context: context,
-                                    warnig_to_display:
-                                        "Do you really want to edit ?",
-                                    editWidget:
-                                        textInput(editcntrl: userchange_name),
-                                    onYes_Pressed: () {
-                                      value.change_name(
-                                          name: userchange_name.text);
-                                      Navigator.of(context).pop();
-                                    },
-                                    onNo_Pressed: () {
-                                      Navigator.of(context).pop();
-                                    });
-                              }),
-                          text(size: 13, str: "${name}"),
-                          Divider(),
-                        ]),
-                      ),
-                    ],
-                  ),
-                );
+                                        Navigator.of(context).pop();
+                                      },
+                                      onNo_Pressed: () {
+                                        Navigator.of(context).pop();
+                                      });
+                                }),
+                            text(size: 13, str: "${email}"),
+                            Divider(),
+                          ]),
+                        ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: ListOfText(herizonatal: false, listOfWidget: [
+                            text(
+                                clr: Colors.blueAccent,
+                                str: "Name : ",
+                                edit: true,
+                                onPresd: () async {
+                                  await confirm_alertbox(
+                                      getdata: true,
+                                      context: context,
+                                      warnig_to_display:
+                                          "Do you really want to edit ?",
+                                      editWidget:
+                                          textInput(editcntrl: userchange_name),
+                                      onYes_Pressed: () {
+                                        value.change_name(
+                                            name: userchange_name.text);
+                                        Navigator.of(context).pop();
+                                      },
+                                      onNo_Pressed: () {
+                                        Navigator.of(context).pop();
+                                      });
+                                }),
+                            text(size: 13, str: "${name}"),
+                            Divider(),
+                          ]),
+                        ),
+                      ],
+                    ),
+                  );
+                } else {
+                  return text2(str: 'Login First');
+                }
               }
               return Container(
-                color: Colors.green,
+                color: Colors.white,
+                alignment: Alignment.center,
+                child: Text("Done"),
               );
             });
       }),

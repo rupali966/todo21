@@ -32,6 +32,7 @@ class _SignInScreenState extends State<SignInScreen> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return loddingWidget();
             }
+
             return Scaffold(
               appBar: defaultAppBar(),
               body: Container(

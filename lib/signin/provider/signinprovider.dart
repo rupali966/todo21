@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:persistence/util/constant.dart';
 
 class sign_in_provider extends ChangeNotifier {
   dynamic data;
@@ -6,6 +7,7 @@ class sign_in_provider extends ChangeNotifier {
   String? name;
   String? pass;
   String? email;
+  var dtt;
 
   void getdt({
     String? name,
@@ -27,10 +29,8 @@ class sign_in_provider extends ChangeNotifier {
       return true;
     } else {
       this.signin = false;
-      false;
+      return false;
     }
-    this.signin = false;
-    return false;
   }
 
   void setdata({dynamic dt}) {
@@ -38,11 +38,31 @@ class sign_in_provider extends ChangeNotifier {
   }
 
   void sign_in(bool signin_val) {
+    if (signin_val) {
+      var data = {"signin": true};
+      fire.collection("userSignUp").doc("Sign-In").set(
+            data,
+          );
+    } else {
+      var data = {"signin": false};
+      fire.collection("userSignUp").doc("Sign-In").set(
+            data,
+          );
+    }
+
     print("Value is Changing ..");
     this.signin = signin_val;
   }
 
-  bool is_user_is_sign_in() {
-    return this.signin;
+  void is_signIn() async {
+    var k = fire
+        .collection('userSignUp')
+        .doc('Sign-In')
+        .snapshots()
+        .listen((event) {
+      print(event.data()!['signin']);
+      this.dtt = event.data()!['signin'];
+    });
+    k;
   }
 }
