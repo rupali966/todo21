@@ -5,18 +5,21 @@ Widget Button(
   String str = "",
   String? routeName,
   GestureTapCallback? onTap,
+  double hgt = 50,
+  double wgt = 300,
+  double rad = 10,
 }) {
   return InkWell(
     onTap: onTap,
     child: Container(
       padding: EdgeInsets.all(2),
       margin: EdgeInsets.all(2),
-      height: 50,
-      width: 300,
+      height: hgt,
+      width: wgt,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: Colors.blue,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(rad),
       ),
       child: Text(str,
           style: TextStyle(

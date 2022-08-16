@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'signin/provider/signinprovider.dart';
 import 'signup/modal/signup_data.dart';
+import 'signup/provider/firefun.dart';
 import 'work/view/workscreen.dart';
 
 void main() async {
@@ -29,6 +30,9 @@ void main() async {
         ListenableProvider<dataOperation>(create: (_) => dataOperation()),
         ListenableProvider<signupProvider>(create: (_) => signupProvider()),
         ListenableProvider<sign_in_provider>(create: (_) => sign_in_provider()),
+        ListenableProvider<fireOper>(
+            create: (_) => fireOper(
+                docName: 'userSignUptest', collectionname: 'userSignUp')),
       ],
       child: MaterialApp(
         title: 'Reading and Writing Files',

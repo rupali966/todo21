@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:persistence/signup/provider/firefun.dart';
+import 'package:persistence/util/defaut_widgets.dart';
+import 'package:persistence/util/persnal_widgets.dart';
 
 class WorkingScreen extends StatefulWidget {
   const WorkingScreen({Key? key}) : super(key: key);
@@ -8,8 +11,119 @@ class WorkingScreen extends StatefulWidget {
 }
 
 class _WorkingScreenState extends State<WorkingScreen> {
+  fireOper fireop =
+      fireOper(docName: 'userSignUptest', collectionname: 'userSignUp');
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      drawer: Drawer(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blueAccent,
+              ),
+              child: Align(
+                alignment: Alignment.center,
+                child: ListTile(
+                  title: Text('Timer',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                      )),
+                  subtitle: Text(
+                    'Scaibu',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Button(
+                    rad: 5,
+                    hgt: 30,
+                    onTap: () {
+                      Navigate(context, routeName: 'signup');
+                    },
+                    context,
+                    str: "Sign-Up",
+                  ),
+                  const SizedBox(height: 5),
+                  Button(
+                    hgt: 30,
+                    rad: 5,
+                    onTap: () {
+                      Navigate(context, routeName: 'signin');
+                    },
+                    context,
+                    str: "Sign-In",
+                  ),
+                  const SizedBox(height: 5),
+                  Button(
+                    hgt: 30,
+                    rad: 5,
+                    onTap: () async {
+                      fireop.fire_sign_out();
+                    },
+                    context,
+                    str: "Sign-Out",
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+      endDrawer: Drawer(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blueAccent,
+              ),
+              child: Align(
+                alignment: Alignment.center,
+                child: ListTile(
+                  title: Text('Timer',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                      )),
+                  subtitle: Text(
+                    'Scaibu',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Button(context),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+      appBar: defaultAppBar(),
+      // bottomSheet: showBottomSheet(context: context, builder: builder)
+      body: Container(),
+    );
   }
 }

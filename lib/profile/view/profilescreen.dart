@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:persistence/signin/provider/signinprovider.dart';
 import 'package:persistence/signup/modal/signup_data.dart';
+import 'package:persistence/signup/provider/firefun.dart';
 import 'package:persistence/util/constant.dart';
 import 'package:persistence/util/defaut_widgets.dart';
 import 'package:persistence/util/dialog.dart';
@@ -21,6 +22,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   var data;
   String name = "";
   String email = "";
+  fireOper fireop =
+      fireOper(docName: 'userSignUptest', collectionname: 'userSignUp');
 
   @override
   void initState() {
@@ -57,7 +60,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               }
               if (snapshot.connectionState == ConnectionState.waiting) {
                 pr.is_signIn();
-                return loddingWidget();
+                fireop.fire_auth();
               }
               if (snapshot.connectionState == ConnectionState.active) {
                 // data = snapshot.data!.docs.map((e) {
@@ -75,7 +78,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 });
                 print(data);
 
-                if (pr.dtt) {
+                if (fireop.user_sign_in != true) {
                   return Container(
                     padding: EdgeInsets.all(16),
                     child: Column(
@@ -86,6 +89,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         S(),
                         text(str: ""),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: ListOfText(herizonatal: false, listOfWidget: [
+                            text(
+                                clr: Colors.blueAccent,
+                                str: "Name : ",
+                                edit: true,
+                                onPresd: () async {
+                                  await confirm_alertbox(
+                                      getdata: true,
+                                      context: context,
+                                      warnig_to_display:
+                                          "Do you really want to edit ?",
+                                      editWidget:
+                                          textInput(editcntrl: userchange_name),
+                                      onYes_Pressed: () {
+                                        value.change_name(
+                                            name: userchange_name.text);
+                                        Navigator.of(context).pop();
+                                      },
+                                      onNo_Pressed: () {
+                                        Navigator.of(context).pop();
+                                      });
+                                }),
+                            text(size: 13, str: "${name}"),
+                            Divider(),
+                          ]),
+                        ),
                         Align(
                           alignment: Alignment.centerLeft,
                           child: ListOfText(herizonatal: false, listOfWidget: [
@@ -117,46 +148,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Divider(),
                           ]),
                         ),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: ListOfText(herizonatal: false, listOfWidget: [
-                            text(
-                                clr: Colors.blueAccent,
-                                str: "Name : ",
-                                edit: true,
-                                onPresd: () async {
-                                  await confirm_alertbox(
-                                      getdata: true,
-                                      context: context,
-                                      warnig_to_display:
-                                          "Do you really want to edit ?",
-                                      editWidget:
-                                          textInput(editcntrl: userchange_name),
-                                      onYes_Pressed: () {
-                                        value.change_name(
-                                            name: userchange_name.text);
-                                        Navigator.of(context).pop();
-                                      },
-                                      onNo_Pressed: () {
-                                        Navigator.of(context).pop();
-                                      });
-                                }),
-                            text(size: 13, str: "${name}"),
-                            Divider(),
-                          ]),
-                        ),
                       ],
                     ),
                   );
                 } else {
-                  return text2(str: 'Login First');
+                  return Login_required(log_in_required: 'Login required');
                 }
               }
-              return Container(
-                color: Colors.white,
-                alignment: Alignment.center,
-                child: Text("Done"),
-              );
+              return Login_required(log_in_required: 'Login required');
             });
       }),
     );

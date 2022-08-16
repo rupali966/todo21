@@ -97,7 +97,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       docName: 'userSignUptest',
                       collectionname: 'userSignUp',
                     );
+                    var test = await fireop.get_data();
+                    print(test);
                     fireop.safe_write_usersignup(context, data: usr1);
+                    await fireop.fire_registration();
                   })),
                 ],
               ),

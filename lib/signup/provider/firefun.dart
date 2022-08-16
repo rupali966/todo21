@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:persistence/signup/modal/signup_data.dart';
 import 'package:persistence/util/persnal_widgets.dart';
@@ -9,6 +10,7 @@ writing_data_for_usersignup({
   String? document_name,
 }) async {
   final fire = FirebaseFirestore.instance;
+
   dynamic collectionRef = fire.collection("${collection_name.toString()}");
   final docRef = collectionRef
       .withConverter(
@@ -34,16 +36,19 @@ Future<Map<String, dynamic>> get_data({
   return {};
 }
 
-class fireOper {
+class fireOper extends ChangeNotifier {
   fireOper({required this.collectionname, required this.docName});
 
+  bool user_sign_in = false;
   String collectionname;
   String docName;
   final fire = FirebaseFirestore.instance;
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
   // final docRef = FirebaseFirestore.instance.collection("${collectionname}").doc("$docName");
   doc_ref() {
     return fire.collection("${collectionname}").doc("$docName");
+    notifyListeners();
   }
 
   force_write_for_usersignup({
@@ -83,6 +88,7 @@ class fireOper {
       force_write_for_usersignup(data: data);
       snackbarrr(context, msg: 'Saving ...', bgclr: Colors.green);
     }
+    notifyListeners();
   }
 
   get_data() {
@@ -93,6 +99,69 @@ class fireOper {
       },
       onError: (e) => print("Error getting document: $e"),
     );
+    notifyListeners();
+
     return data;
+  }
+
+  fire_registration() async {
+    var data = await get_data();
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: data['email'], password: data['pass']);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
+    notifyListeners();
+  }
+
+  fire_Signin({
+    required String email,
+    required String pass,
+  }) async {
+    try {
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+        email: email,
+        password: pass,
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+        this.user_sign_in = false;
+      } else if (e.code == 'wrong-password') {
+        this.user_sign_in = false;
+        print('Wrong password provided for that user.');
+      }
+    }
+    notifyListeners();
+
+    print("Done");
+  }
+
+  fire_auth() async {
+    await auth.authStateChanges().listen((User? user) {
+      if (user == null) {
+        print('User is currently signed out!');
+        this.user_sign_in = false;
+      } else {
+        print('User is signed in!');
+        this.user_sign_in = true;
+      }
+    });
+    notifyListeners();
+  }
+
+  fire_sign_out() async {
+    await auth.signOut();
+    this.user_sign_in = false;
+    print('Sign-Out');
+    notifyListeners();
   }
 }

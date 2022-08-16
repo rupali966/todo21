@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:persistence/signin/provider/signinprovider.dart';
+import 'package:persistence/signup/provider/firefun.dart';
 import 'package:persistence/util/constant.dart';
 import 'package:persistence/util/defaut_widgets.dart';
 import 'package:persistence/util/persnal_widgets.dart';
@@ -79,6 +80,15 @@ class _SignInScreenState extends State<SignInScreen> {
                               pr.getdt(name: '', email: '', pass: '');
                             }
                           });
+                          fireOper fireop = fireOper(
+                            docName: 'userSignUptest',
+                            collectionname: 'userSignUp',
+                          );
+                          fireop.fire_Signin(
+                            email: usrname,
+                            pass: pass,
+                          );
+                          fireop.fire_auth();
                           print(dt);
                           if ((usrname == pr.name || usrname == pr.email) &&
                               pass == pr.pass) {
@@ -87,7 +97,8 @@ class _SignInScreenState extends State<SignInScreen> {
                               ctx,
                               msg: "Logging ...",
                             );
-                            Navigate(ctx, routeName: 'workscreen');
+                            Navigator.pop(context);
+                            // Navigate(ctx, routeName: 'workscreen');
                           } else {
                             pr.sign_in(false);
                             snackbarrr(ctx, msg: "Wrong User-Name or PassWord");
