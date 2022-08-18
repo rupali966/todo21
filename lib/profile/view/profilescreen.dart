@@ -73,12 +73,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     // print(e.data());
                     name = e['name'];
                     email = e['email'];
-                    return e['name'];
                   }
                 });
                 print(data);
 
-                if (fireop.user_sign_in != true) {
+                if (fireop.user_sign_in) {
                   return Container(
                     padding: EdgeInsets.all(16),
                     child: Column(
@@ -113,6 +112,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         Navigator.of(context).pop();
                                       });
                                 }),
+                            //showing the user name
                             text(size: 13, str: "${name}"),
                             Divider(),
                           ]),
@@ -144,6 +144,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         Navigator.of(context).pop();
                                       });
                                 }),
+                            // showing the email
                             text(size: 13, str: "${email}"),
                             Divider(),
                           ]),

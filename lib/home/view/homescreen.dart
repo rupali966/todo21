@@ -17,15 +17,21 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final Stream<QuerySnapshot> _usersStream =
       fire.collection('userSignUp').snapshots();
-  fireOper fireop =
-      fireOper(docName: 'userSignUptest', collectionname: 'userSignUp');
+  late fireOper fireop;
+  bool? sign_in;
+
+  @override
+  void initState() {
+    fireop = fireOper(docName: 'userSignUptest', collectionname: 'userSignUp');
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Consumer<fireOper>(
         builder: (context, value, child) {
-          value.fire_auth();
           return StreamBuilder<QuerySnapshot>(
               stream: _usersStream,
               builder: (context, snapshot) {
@@ -33,12 +39,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   return hasErrorWidget();
                 }
                 if (snapshot.connectionState == ConnectionState.waiting) {
+                  fireop.fire_auth();
+
                   return loddingWidget();
                 }
                 if (snapshot.connectionState == ConnectionState.active) {
-                  print('is User Sign in ${fireop.user_sign_in}');
-
-                  if (value.user_sign_in) {
+                  if (fireop.user_sign_in) {
                     return WorkingScreen();
                   } else {
                     return Scaffold(

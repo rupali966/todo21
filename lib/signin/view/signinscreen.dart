@@ -4,6 +4,7 @@ import 'package:persistence/signin/provider/signinprovider.dart';
 import 'package:persistence/signup/provider/firefun.dart';
 import 'package:persistence/util/constant.dart';
 import 'package:persistence/util/defaut_widgets.dart';
+import 'package:persistence/util/dialog.dart';
 import 'package:persistence/util/persnal_widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -64,43 +65,31 @@ class _SignInScreenState extends State<SignInScreen> {
                         ctx,
                         str: 'Sign-In',
                         onTap: () async {
+                          // getting input from the user
                           String usrname = username.text;
                           String pass = password.text;
-                          sign_in_provider pr =
-                              Provider.of<sign_in_provider>(ctx, listen: false);
-                          dynamic dt = snapshot.data!.docs.map((e) {
-                            var currdt = e.data()! as Map<String, dynamic>;
-                            if (e.id == 'userSignUptest') {
-                              pr.getdt(
-                                  name: currdt['name'],
-                                  email: currdt['email'],
-                                  pass: currdt['pass']);
-                            } else {
-                              snackbarrr(ctx, msg: "Parsing Error");
-                              pr.getdt(name: '', email: '', pass: '');
-                            }
-                          });
+
+                          // provider object for working with the provider
+
+                          // object Declaration for performing operations
                           fireOper fireop = fireOper(
-                            docName: 'userSignUptest',
-                            collectionname: 'userSignUp',
-                          );
-                          fireop.fire_Signin(
-                            email: usrname,
-                            pass: pass,
-                          );
-                          fireop.fire_auth();
-                          print(dt);
-                          if ((usrname == pr.name || usrname == pr.email) &&
-                              pass == pr.pass) {
-                            pr.sign_in(true);
-                            snackbarrr(
-                              ctx,
-                              msg: "Logging ...",
-                            );
-                            Navigator.pop(context);
-                            // Navigate(ctx, routeName: 'workscreen');
+                              docName: 'userSignUptest',
+                              collectionname: 'userSignUp');
+
+                          await fireop.fire_Signin(context,
+                              e_mail: usrname, passWord: pass);
+
+                          await fireop.fire_auth();
+
+                          if (await fireop.user_sign_in) {
+                            await confirm_alertbox(
+                                context: context,
+                                editWidget: Text('data'),
+                                warnig_to_display:
+                                    'would you like to verify your email id ?');
+                            snackbarrr(ctx, msg: "Logging ...");
+                            Navigator.pushNamed(context, '/');
                           } else {
-                            pr.sign_in(false);
                             snackbarrr(ctx, msg: "Wrong User-Name or PassWord");
                           }
                         },

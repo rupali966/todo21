@@ -19,12 +19,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController email = TextEditingController();
-
+  late fireOper fireop;
   dynamic signup;
 
   @override
   void initState() {
     signup = Provider.of<signupProvider>(context, listen: false);
+    fireop = fireOper(docName: 'userSignUptest', collectionname: 'userSignUp');
 
     super.initState();
   }
@@ -86,21 +87,36 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   S(),
                   Center(
                       child: Button(context, str: "Save", onTap: () async {
-                        final usr1 = user_signup_modal(
-                      id1: 1,
-                      name1: username.text,
-                      pass1: password.text,
-                      email1: email.text,
+                    //1.  making the modal for performing operation
+                    final usr1 = user_signup_modal(
+                        id1: 1,
+                        name1: username.text,
+                        pass1: password.text,
+                        email1: email.text);
+
+                    bool regisrationexist = await fireop.fire_registration(
+                      pass: password.text,
+                      email: email.text,
                     );
-                    signup.setData(setdt: usr1);
-                    fireOper fireop = fireOper(
-                      docName: 'userSignUptest',
-                      collectionname: 'userSignUp',
-                    );
-                    var test = await fireop.get_data();
-                    print(test);
-                    fireop.safe_write_usersignup(context, data: usr1);
-                    await fireop.fire_registration();
+                    if (!regisrationexist) {
+                      // writing the firebase database
+                      await fireop.safe_write_usersignup(context, data: usr1);
+                      snackbarrr(context, msg: 'Saving your data safly ');
+                      Navigator.pushNamed(context, 'signin');
+                    } else {
+                      // showing warning
+                      snackbarrr(context,
+                          msg: 'User Already Exist Go For ',
+                          action: SnackBarAction(
+                              textColor: Colors.yellowAccent,
+                              label: 'Sign-in',
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  'signin',
+                                );
+                              }));
+                    }
                   })),
                 ],
               ),

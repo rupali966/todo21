@@ -44,11 +44,14 @@ class fireOper extends ChangeNotifier {
   String docName;
   final fire = FirebaseFirestore.instance;
   final FirebaseAuth auth = FirebaseAuth.instance;
+  bool isRegistrationexist = true;
+  Map<String, dynamic> signin_true = {'signin': true};
+  Map<String, dynamic> signin_false = {'signin': false};
 
   // final docRef = FirebaseFirestore.instance.collection("${collectionname}").doc("$docName");
   doc_ref() {
-    return fire.collection("${collectionname}").doc("$docName");
     notifyListeners();
+    return fire.collection("${collectionname}").doc("$docName");
   }
 
   force_write_for_usersignup({
@@ -95,6 +98,7 @@ class fireOper extends ChangeNotifier {
     final docRef = fire.collection(collectionname).doc(docName);
     var data = docRef.get().then(
       (DocumentSnapshot doc) {
+        print(doc.data());
         return doc.data() as Map<String, dynamic>;
       },
       onError: (e) => print("Error getting document: $e"),
@@ -104,38 +108,61 @@ class fireOper extends ChangeNotifier {
     return data;
   }
 
-  fire_registration() async {
-    var data = await get_data();
-    try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-              email: data['email'], password: data['pass']);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }
-    } catch (e) {
-      print(e);
+  fire_sendEmail_For_Authntication() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null && !user.emailVerified) {
+      await user.sendEmailVerification();
     }
-    notifyListeners();
   }
 
-  fire_Signin({
-    required String email,
-    required String pass,
+  fire_registration({
+    String? email,
+    String? pass,
   }) async {
+    Map<String, dynamic> data = await get_data();
+    print(data);
+    if (data['email'] != email && data['pass'] != pass) {
+      try {
+        UserCredential userCredential =
+            await auth.createUserWithEmailAndPassword(
+                email: email.toString(), password: pass.toString());
+        isRegistrationexist = false;
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          print('The password provided is too weak.');
+        } else if (e.code == 'email-already-in-use') {
+          print('The account already exists for that email.');
+          isRegistrationexist = true;
+        }
+      } catch (e) {
+        print(e);
+      }
+    } else {
+      isRegistrationexist = false;
+    }
+
+    notifyListeners();
+    return isRegistrationexist;
+  }
+
+  fire_Signin(
+    context, {
+    required String e_mail,
+    required String passWord,
+  }) async {
+    await fire_auth();
     try {
       UserCredential userCredential = await auth.signInWithEmailAndPassword(
-        email: email,
-        password: pass,
-      );
+          email: e_mail, password: passWord);
+      await fire.collection('userSignUp').doc('Sign-In').set(signin_true);
+      this.user_sign_in = true;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
+        snackbarrr(context, msg: 'No user found for that email.');
         print('No user found for that email.');
         this.user_sign_in = false;
       } else if (e.code == 'wrong-password') {
+        snackbarrr(context, msg: 'Wrong password provided for that user.');
         this.user_sign_in = false;
         print('Wrong password provided for that user.');
       }
@@ -145,23 +172,28 @@ class fireOper extends ChangeNotifier {
     print("Done");
   }
 
+  fire_sign_out() async {
+    await auth.signOut();
+    this.user_sign_in = false;
+    fire.collection('userSignUp').doc('userSignUptest').set({});
+    fire.collection('userSignUp').doc('Sign-In').set(signin_false);
+    print('Sign-Out');
+    notifyListeners();
+  }
+
   fire_auth() async {
     await auth.authStateChanges().listen((User? user) {
       if (user == null) {
         print('User is currently signed out!');
+        fire.collection('userSignUp').doc('Sign-In').set(signin_false);
         this.user_sign_in = false;
       } else {
         print('User is signed in!');
+        fire.collection('userSignUp').doc('Sign-In').set(signin_true);
         this.user_sign_in = true;
       }
     });
     notifyListeners();
-  }
-
-  fire_sign_out() async {
-    await auth.signOut();
-    this.user_sign_in = false;
-    print('Sign-Out');
-    notifyListeners();
+    return 'firebase authentication';
   }
 }

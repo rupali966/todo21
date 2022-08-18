@@ -11,12 +11,20 @@ class WorkingScreen extends StatefulWidget {
 }
 
 class _WorkingScreenState extends State<WorkingScreen> {
-  fireOper fireop =
-      fireOper(docName: 'userSignUptest', collectionname: 'userSignUp');
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  late fireOper fireop;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    fireop = fireOper(docName: 'userSignUptest', collectionname: 'userSignUp');
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       drawer: Drawer(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,25 +56,6 @@ class _WorkingScreenState extends State<WorkingScreen> {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  Button(
-                    rad: 5,
-                    hgt: 30,
-                    onTap: () {
-                      Navigate(context, routeName: 'signup');
-                    },
-                    context,
-                    str: "Sign-Up",
-                  ),
-                  const SizedBox(height: 5),
-                  Button(
-                    hgt: 30,
-                    rad: 5,
-                    onTap: () {
-                      Navigate(context, routeName: 'signin');
-                    },
-                    context,
-                    str: "Sign-In",
-                  ),
                   const SizedBox(height: 5),
                   Button(
                     hgt: 30,
@@ -83,44 +72,7 @@ class _WorkingScreenState extends State<WorkingScreen> {
           ],
         ),
       ),
-      endDrawer: Drawer(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blueAccent,
-              ),
-              child: Align(
-                alignment: Alignment.center,
-                child: ListTile(
-                  title: Text('Timer',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.white,
-                      )),
-                  subtitle: Text(
-                    'Scaibu',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Button(context),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
+      endDrawer: defaultDrawer(context),
       appBar: defaultAppBar(),
       // bottomSheet: showBottomSheet(context: context, builder: builder)
       body: Container(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:persistence/signup/provider/firefun.dart';
 import 'package:persistence/util/constant.dart';
 import 'package:persistence/util/persnal_widgets.dart';
 
@@ -102,6 +103,50 @@ Widget Stream_Done_Widget({String? done_msg}) {
           fontSize: 21,
         ),
       ),
+    ),
+  );
+}
+
+defaultDrawer(
+  context, {
+  List<Widget> children = const <Widget>[],
+}) {
+  fireOper fireop =
+      fireOper(docName: 'userSignUptest', collectionname: 'userSignUp');
+  return Drawer(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        const DrawerHeader(
+          decoration: BoxDecoration(
+            color: Colors.blueAccent,
+          ),
+          child: Align(
+            alignment: Alignment.center,
+            child: ListTile(
+              title: Text('Timer',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
+                  )),
+              subtitle: Text(
+                'Scaibu',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                ),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: children,
+          ),
+        )
+      ],
     ),
   );
 }
