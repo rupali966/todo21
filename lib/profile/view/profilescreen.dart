@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:persistence/signin/provider/signinprovider.dart';
-import 'package:persistence/signup/modal/signup_data.dart';
+import 'package:persistence/profile/provider/profile_provider.dart';
 import 'package:persistence/signup/provider/firefun.dart';
 import 'package:persistence/util/constant.dart';
 import 'package:persistence/util/defaut_widgets.dart';
@@ -33,24 +32,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: Container(
-          height: 50,
-          width: 50,
-        ),
-      ),
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.person),
-        ),
-        title: Text('Profile '),
-      ),
-      body: Consumer<signupProvider>(builder: (context, value, child) {
-        sign_in_provider pr = Provider.of<sign_in_provider>(
-          context,
-          listen: false,
-        );
+      appBar: defaultAppBar(),
+      body:
+          Consumer<profile_provider>(builder: (context, logic_provider, child) {
         return StreamBuilder<QuerySnapshot>(
             stream: userSignUpDoc,
             builder:
@@ -59,23 +43,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 return hasErrorWidget();
               }
               if (snapshot.connectionState == ConnectionState.waiting) {
-                pr.is_signIn();
                 fireop.fire_auth();
+
+                return loddingWidget();
               }
               if (snapshot.connectionState == ConnectionState.active) {
-                // data = snapshot.data!.docs.map((e) {
-                //   Map<String, dynamic> data = e.data()! as Map<String, dynamic>;
-                //   return data['name'];
-                // });
-
-                data = snapshot.data!.docs.map((e) {
+                snapshot.data!.docs.forEach((e) {
                   if (e.id == 'userSignUptest') {
-                    // print(e.data());
-                    name = e['name'];
-                    email = e['email'];
+                    var dataref = e.data() as Map<String, dynamic>;
+                    name = dataref['name'];
+                    email = dataref['email'];
                   }
                 });
-                print(data);
 
                 if (fireop.user_sign_in) {
                   return Container(
@@ -104,8 +83,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       editWidget:
                                           textInput(editcntrl: userchange_name),
                                       onYes_Pressed: () {
-                                        value.change_name(
-                                            name: userchange_name.text);
                                         Navigator.of(context).pop();
                                       },
                                       onNo_Pressed: () {
@@ -134,10 +111,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         editcntrl: userchange_email,
                                       ),
                                       onYes_Pressed: () async {
-                                        value.change_email(
-                                          email: userchange_email.text,
-                                        );
-
                                         Navigator.of(context).pop();
                                       },
                                       onNo_Pressed: () {
@@ -147,6 +120,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             // showing the email
                             text(size: 13, str: "${email}"),
                             Divider(),
+                            Center(
+                              child:
+                                  Button(str: 'test', context, onTap: () async {
+                                print('test');
+                                // logic_provider.get_user_uid();
+                                // logic_provider.get_credential();
+                                var data =
+                                    await logic_provider.retrive_details();
+                                print(data.name);
+                              }),
+                            ),
                           ]),
                         ),
                       ],

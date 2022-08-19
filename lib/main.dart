@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:persistence/home/view/homescreen.dart';
+import 'package:persistence/profile/provider/profile_provider.dart';
 import 'package:persistence/profile/view/profilescreen.dart';
 import 'package:persistence/signin/view/signinscreen.dart';
 import 'package:persistence/signup/view/signupscreen.dart';
@@ -33,6 +34,7 @@ void main() async {
         ListenableProvider<fireOper>(
             create: (_) => fireOper(
                 docName: 'userSignUptest', collectionname: 'userSignUp')),
+        ListenableProvider<profile_provider>(create: (_) => profile_provider()),
       ],
       child: MaterialApp(
         title: 'Reading and Writing Files',

@@ -3,13 +3,17 @@ import 'package:persistence/signup/provider/firefun.dart';
 import 'package:persistence/util/constant.dart';
 import 'package:persistence/util/persnal_widgets.dart';
 
-defaultAppBar({String? title}) {
+defaultAppBar({
+  String? title,
+  final Widget? leading,
+}) {
   if (title != null) {
     return AppBar(
       title: Text(title.toString(), style: appbarTextStyle),
     );
   }
   return AppBar(
+    leading: leading,
     title: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -118,28 +122,7 @@ defaultDrawer(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const DrawerHeader(
-          decoration: BoxDecoration(
-            color: Colors.blueAccent,
-          ),
-          child: Align(
-            alignment: Alignment.center,
-            child: ListTile(
-              title: Text('Timer',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
-                  )),
-              subtitle: Text(
-                'Scaibu',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15,
-                ),
-              ),
-            ),
-          ),
-        ),
+        drawerheadear(),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -147,6 +130,31 @@ defaultDrawer(
           ),
         )
       ],
+    ),
+  );
+}
+
+drawerheadear() {
+  return const DrawerHeader(
+    decoration: BoxDecoration(
+      color: Colors.blueAccent,
+    ),
+    child: Align(
+      alignment: Alignment.center,
+      child: ListTile(
+        title: Text('Timer',
+            style: TextStyle(
+              fontSize: 18,
+              color: Colors.white,
+            )),
+        subtitle: Text(
+          'Scaibu',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 15,
+          ),
+        ),
+      ),
     ),
   );
 }

@@ -105,6 +105,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Navigator.pushNamed(context, 'signin');
                     } else {
                       // showing warning
+                      await fireop.safe_write_usersignup(context, data: usr1);
                       snackbarrr(context,
                           msg: 'User Already Exist Go For ',
                           action: SnackBarAction(

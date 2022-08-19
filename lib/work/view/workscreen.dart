@@ -30,28 +30,7 @@ class _WorkingScreenState extends State<WorkingScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blueAccent,
-              ),
-              child: Align(
-                alignment: Alignment.center,
-                child: ListTile(
-                  title: Text('Timer',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.white,
-                      )),
-                  subtitle: Text(
-                    'Scaibu',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            drawerheadear(),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -73,7 +52,12 @@ class _WorkingScreenState extends State<WorkingScreen> {
         ),
       ),
       endDrawer: defaultDrawer(context),
-      appBar: defaultAppBar(),
+      appBar: defaultAppBar(
+          leading: IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, 'profile');
+              },
+              icon: Icon(Icons.menu))),
       // bottomSheet: showBottomSheet(context: context, builder: builder)
       body: Container(),
     );

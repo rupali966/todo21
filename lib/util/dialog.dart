@@ -15,18 +15,25 @@ confirm_alertbox({
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) {
+      var height = MediaQuery.of(context).size.height;
+      var width = MediaQuery.of(context).size.width;
       return AlertDialog(
         scrollable: true,
         elevation: 0.2,
         alignment: Alignment.center,
+        actionsAlignment: MainAxisAlignment.start,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
         title: (getdata)
             ? Text('Edit')
             : Text("$alrt_title",
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 18,
                   inherit: true,
                 )),
         content: Container(
+          width: width,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(25),
           ),
@@ -51,7 +58,7 @@ confirm_alertbox({
                         : Text(
                             warnig_to_display,
                             style: TextStyle(
-                              fontSize: 12,
+                              fontSize: 14,
                             ),
                           ),
                   ),
@@ -70,6 +77,7 @@ confirm_alertbox({
                       ),
                       onPressed: onYes_Pressed,
                     ),
+                    S(),
                     IconButton(
                       icon: Icon(
                         Icons.thumb_down,
@@ -79,35 +87,37 @@ confirm_alertbox({
                       onPressed: onNo_Pressed,
                     ),
                   ],
-                )
+          )
               : Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
                   padding: EdgeInsets.all(8),
+                  margin: EdgeInsets.all(15),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       IconButton(
+                        tooltip: 'Yes',
                         icon: Icon(
-                          Icons.thumb_up,
-                          size: 28,
-                          color: Colors.green,
+                          Icons.thumb_up_alt_outlined,
+                          size: 35,
+                          color: Colors.blueAccent,
                         ),
                         onPressed: () {
                           Navigator.pop(context);
                         },
                       ),
+                      S(width: 25),
                       IconButton(
+                        tooltip: 'No',
                         icon: Icon(
-                          Icons.thumb_down,
-                          size: 28,
-                          color: Colors.redAccent,
+                          Icons.thumb_down_alt_outlined,
+                          size: 35,
+                          color: Colors.blueAccent,
                         ),
                         onPressed: () {
                           Navigator.pop(context);
                         },
                       ),
+                      S(width: 25, height: 25),
                     ],
                   ),
                 ),
