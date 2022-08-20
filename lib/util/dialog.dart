@@ -75,7 +75,9 @@ confirm_alertbox({
                         size: 28,
                         color: Colors.green,
                       ),
-                      onPressed: onYes_Pressed,
+                      onPressed: () async {
+                        onYes_Pressed!.call();
+                      },
                     ),
                     S(),
                     IconButton(
@@ -84,7 +86,9 @@ confirm_alertbox({
                         size: 28,
                         color: Colors.redAccent,
                       ),
-                      onPressed: onNo_Pressed,
+                      onPressed: () async {
+                        onNo_Pressed!.call();
+                      },
                     ),
                   ],
           )
@@ -102,6 +106,7 @@ confirm_alertbox({
                           color: Colors.blueAccent,
                         ),
                         onPressed: () {
+                          onYes_Pressed!.call();
                           Navigator.pop(context);
                         },
                       ),
@@ -114,6 +119,7 @@ confirm_alertbox({
                           color: Colors.blueAccent,
                         ),
                         onPressed: () {
+                          onNo_Pressed!.call();
                           Navigator.pop(context);
                         },
                       ),
