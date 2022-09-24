@@ -19,10 +19,8 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
-  final Stream<QuerySnapshot> _usersStream =
-      fire.collection('userSignUp').snapshots();
-  fireOper fireop =
-      fireOper(docName: 'userSignUptest', collectionname: 'userSignUp');
+  final Stream<QuerySnapshot> _usersStream = fire.collection('userSignUp').snapshots();
+  fireOper fireop = fireOper(docName: 'userSignUptest', collectionname: 'userSignUp');
   profile_provider profile_pr = profile_provider();
 
   @override
@@ -61,6 +59,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       S(),
                       Center(
                         child: textInput(
+                          obscureText: true,
                           editcntrl: password,
                           hgt: 50,
                           wgt: 300,
@@ -80,19 +79,15 @@ class _SignInScreenState extends State<SignInScreen> {
                             // provider object for working with the provider
 
                             // object Declaration for performing operations
-                            fireOper fireop = fireOper(
-                                docName: 'userSignUptest',
-                                collectionname: 'userSignUp');
+                            fireOper fireop = fireOper(docName: 'userSignUptest', collectionname: 'userSignUp');
 
-                            await fireop.fire_Signin(context,
-                                e_mail: usrname, passWord: pass);
+                            await fireop.fire_Signin(context, e_mail: usrname, passWord: pass);
 
                             await fireop.fire_auth();
 
                             // check is user is sign in
                             if (await fireop.user_sign_in) {
-                              print(
-                                  'user is signin = ${await fireop.user_sign_in}');
+                              print('user is signin = ${await fireop.user_sign_in}');
                               // check is verified the dont sow the dialog and directly log in
 
                               await profile_pr.is_mail_verifired(context);
@@ -133,8 +128,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               //   }
                               // });
                             } else {
-                              snackbarrr(ctx,
-                                  msg: "Wrong User-Name or PassWord");
+                              snackbarrr(ctx, msg: "Wrong User-Name or PassWord");
                             }
                           },
                         ),

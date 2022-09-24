@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:persistence/signup/provider/firefun.dart';
-import 'package:persistence/util/constant.dart';
+import 'package:persistence/util/app_componet.dart';
 import 'package:persistence/util/persnal_widgets.dart';
 
 defaultAppBar({
@@ -115,8 +115,7 @@ defaultDrawer(
   context, {
   List<Widget> children = const <Widget>[],
 }) {
-  fireOper fireop =
-      fireOper(docName: 'userSignUptest', collectionname: 'userSignUp');
+  fireOper fireop = fireOper(docName: 'userSignUptest', collectionname: 'userSignUp');
   return Drawer(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,

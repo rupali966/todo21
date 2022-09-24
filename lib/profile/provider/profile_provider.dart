@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:persistence/profile/modal/profile_modal.dart';
 import 'package:persistence/util/constant.dart';
 import 'package:persistence/util/dialog.dart';
@@ -17,13 +18,26 @@ class profile_provider extends ChangeNotifier {
   bool isVerfied = false;
   late UserCredential credential;
   var user;
+  XFile image = XFile('');
   profile_modal pro_modal = profile_modal(
+    pass: '',
     provider: '',
     uid: '',
     name: '',
     emailAddress: '',
     profilePhoto: '',
   );
+
+  initialize_data(snapshot) {
+    snapshot.data!.docs.forEach((e) {
+      if (e.id == 'userSignUptest') {
+        var dataref = e.data() as Map<String, dynamic>;
+        pro_modal.name = dataref['name'].toString();
+        pro_modal.pass = dataref['email'].toString();
+      }
+    });
+    notifyListeners();
+  }
 
   get_data() async {
     final docRef = fire.collection(collectionname).doc(docName);
@@ -56,7 +70,7 @@ class profile_provider extends ChangeNotifier {
     });
   }
 
-  retrive_details() async {
+  Future<profile_modal> retrive_details() async {
     // use for retrival of common details
     await auth.authStateChanges().listen((User? user) {
       if (user != null) {
@@ -92,18 +106,18 @@ class profile_provider extends ChangeNotifier {
       } else {
         print('email verification = ${user.emailVerified}');
         await confirm_alertbox(
-            alrt_title: 'Verify your email',
+            Alrt_Title: 'Verify your email',
             context: context,
-            editWidget: Text('data'),
-            warnig_to_display: 'Would you like to verify your email id.',
-            onYes_Pressed: () async {
+            Input_wid: Text('data'),
+            warnig: 'Would you like to verify your email id.',
+            Yes_Press: () async {
               await retrive_details(); // init detail the send email for verification
               await send_email_for_verification();
               Navigator.pushNamed(context, '/');
               Navigator.pop(context);
               print('--Yes--');
             },
-            onNo_Pressed: () async {
+            No_Press: () async {
               // if the pressed no the homescreen
               Navigator.pushNamed(context, '/');
               Navigator.pop(context);
@@ -111,5 +125,37 @@ class profile_provider extends ChangeNotifier {
             });
       }
     });
+  }
+
+  update_username({required String name}) async {
+    auth.authStateChanges().listen((User? user) {
+      user!.updateDisplayName(name);
+      print('name update successfully ...${user.displayName}');
+    });
+    this.pro_modal.name = name;
+    notifyListeners();
+  }
+
+  update_email({
+    required String pass,
+    required String previous_mail,
+    required String email,
+  }) async {
+    auth
+        .signInWithEmailAndPassword(email: previous_mail, password: pass)
+        .then((usr) {
+      usr.user!.updateEmail(email);
+      print('Email update successfully ...${user.email}');
+    }).onError((error, stackTrace) {
+      print('error : ${error}');
+    });
+    this.pro_modal.emailAddress = email;
+    notifyListeners();
+  }
+
+  update_image() async {
+    final ImagePicker _picker = ImagePicker();
+    this.image = (await _picker.pickImage(source: ImageSource.gallery))!;
+    notifyListeners();
   }
 }

@@ -78,6 +78,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   S(),
                   Center(
                     child: textInput(
+                      obscureText: true,
                       editcntrl: password,
                       lbltxt: "Password",
                       hgt: 50,

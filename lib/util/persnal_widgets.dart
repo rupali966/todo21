@@ -43,21 +43,21 @@ Widget textInput({
   double? wgt,
   String? lbltxt,
   TextEditingController? editcntrl,
+  bool obscureText = false,
 }) {
   if (hgt != null) {
     return Container(
       height: hgt,
       width: wgt,
       child: TextField(
+        obscureText: obscureText,
         controller: editcntrl,
         style: TextStyle(fontSize: 14),
+        // textAlign: TextAlign.center,
         decoration: InputDecoration(
-          // suffixIcon: IconButton(
-          //   icon: Icon(Icons.edit),
-          //   onPressed: (){},
-          // ),
-          labelText: lbltxt,
-          border: OutlineInputBorder(),
+          hintText: lbltxt,
+          // labelText: lbltxt,
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
         ),
       ),
     );
@@ -65,14 +65,10 @@ Widget textInput({
     return Container(
       height: 50,
       width: 300,
-      child: Expanded(
-        child: TextField(
-          controller: editcntrl,
-          decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Input here ',
-              labelStyle: TextStyle(fontSize: 13)),
-        ),
+      child: TextField(
+        obscureText: obscureText,
+        controller: editcntrl,
+        decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Input here ', labelStyle: TextStyle(fontSize: 13)),
       ),
     );
   }
@@ -90,13 +86,8 @@ Widget text({
   } else {
     return Row(
       children: [
-        Text(
-          str,
-          style: TextStyle(fontSize: size, color: clr),
-        ),
-        Expanded(
-          child: S(),
-        ),
+        Text(str, style: TextStyle(fontSize: size, color: clr)),
+        Expanded(child: S()),
         if (edit)
           IconButton(
               onPressed: () {
@@ -104,11 +95,7 @@ Widget text({
                   onPresd.call();
                 }
               },
-              icon: Icon(
-                Icons.edit,
-                color: Colors.blueAccent,
-                size: 24,
-              ))
+              icon: Icon(Icons.edit, color: Colors.blueAccent, size: 24))
       ],
     );
   }

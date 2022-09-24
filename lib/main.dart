@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:persistence/home/view/homescreen.dart';
@@ -5,6 +7,7 @@ import 'package:persistence/profile/provider/profile_provider.dart';
 import 'package:persistence/profile/view/profilescreen.dart';
 import 'package:persistence/signin/view/signinscreen.dart';
 import 'package:persistence/signup/view/signupscreen.dart';
+import 'package:persistence/work/provider/work_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
@@ -31,10 +34,9 @@ void main() async {
         ListenableProvider<dataOperation>(create: (_) => dataOperation()),
         ListenableProvider<signupProvider>(create: (_) => signupProvider()),
         ListenableProvider<sign_in_provider>(create: (_) => sign_in_provider()),
-        ListenableProvider<fireOper>(
-            create: (_) => fireOper(
-                docName: 'userSignUptest', collectionname: 'userSignUp')),
+        ListenableProvider<fireOper>(create: (_) => fireOper(docName: 'userSignUptest', collectionname: 'userSignUp')),
         ListenableProvider<profile_provider>(create: (_) => profile_provider()),
+        ListenableProvider<work_provider>(create: (_) => work_provider()),
       ],
       child: MaterialApp(
         title: 'Reading and Writing Files',
