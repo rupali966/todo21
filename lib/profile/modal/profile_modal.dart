@@ -9,13 +9,14 @@ class profile_modal {
     required this.emailAddress,
     required this.profilePhoto,
   });
+
   String pass;
   String uid;
   String name;
   String emailAddress;
   String profilePhoto;
 
-  void change_name({String? name}){
+  void change_name({String? name}) {
     this.name = name.toString();
   }
 }

@@ -48,13 +48,10 @@ confirm_alertbox({
                 child: (input_from_user)
                     ? ListBody(
                         children: [
-                          (warnig == "")
-                              ? Text('This is a demo alert dialog.')
-                              : Text(warnig),
+                          (warnig == "") ? Text('This is a demo alert dialog.') : Text(warnig),
                           S(),
                           Center(
-                            child: Align(
-                                alignment: Alignment.topLeft, child: Input_wid),
+                            child: Align(alignment: Alignment.topLeft, child: Input_wid),
                           ),
                         ],
                       )
@@ -198,7 +195,7 @@ multiple_flotingactionbutton(context) {
           alignment: Alignment.bottomRight,
           child: FloatingActionButton(
             onPressed: () {
-              Provider.of<work_provider>(context,listen: false).change_floting();
+              Provider.of<work_provider>(context, listen: false).change_floting();
             },
             child: Icon(Icons.add),
           ),
@@ -220,7 +217,6 @@ multiple_flotingactionbutton(context) {
           ),
         ),
       ],
-
     ),
   );
 }

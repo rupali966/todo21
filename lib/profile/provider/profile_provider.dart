@@ -141,9 +141,7 @@ class profile_provider extends ChangeNotifier {
     required String previous_mail,
     required String email,
   }) async {
-    auth
-        .signInWithEmailAndPassword(email: previous_mail, password: pass)
-        .then((usr) {
+    auth.signInWithEmailAndPassword(email: previous_mail, password: pass).then((usr) {
       usr.user!.updateEmail(email);
       print('Email update successfully ...${user.email}');
     }).onError((error, stackTrace) {
